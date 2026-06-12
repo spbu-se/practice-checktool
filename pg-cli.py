@@ -141,9 +141,9 @@ class Analyzer:
         result = []
         for link in repos:
             try:
-                result.append(self.analyze_repo(link))
+                result.append(f"Analyzing repo {link}\n" + self.analyze_repo(link))
             except RuntimeError as e:
-                result.append(str(e))
+                result.append(f"Analyzing repo {link}\n" + str(e))
 
         return result
 
@@ -219,7 +219,7 @@ class CLI:
                 rv = [str(e)]
             if folder_path is not None:
                 student_path = folder_path / f"{t['id']} {t['studentName']}.md"
-                student_path.write_text("\n".join(rv) + "\n", encoding="utf-8")
+                student_path.write_text("\n======================================\n".join(rv) + "\n", encoding="utf-8")
             else:
                 print("\n".join(rv))
 
