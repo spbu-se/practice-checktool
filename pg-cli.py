@@ -12,6 +12,16 @@ import dateutil
 from dotenv import load_dotenv
 
 
+def md_to_html(md, html) -> None:
+    with tempfile.TemporaryDirectory() as workspace:
+        style_path = pathlib.Path(workspace) / "style.html"
+        style = "<style>body { max-width: none; margin: 20px; padding: 0; font-family: sans-serif; } table { width: 100%; border-collapse: collapse; margin: 20px 0; } table, th, td { border: 1px solid #ccc; } th, td { padding: 10px; text-align: left; } th { background-color: #f2f2f2; }</style>"
+        style_path.write_text(style, encoding="utf-8")
+
+        cmdline = f"pandoc '{md}' -f gfm -t html -H '{style_path}' -o '{html}'"
+        subprocess.run(cmdline, check=False, text=True, shell=True)
+
+
 @dataclass
 class PracticeGrading:
     """A python bindings to practice grading API"""
@@ -219,7 +229,9 @@ class CLI:
                 rv = [str(e)]
             if folder_path is not None:
                 student_path = folder_path / f"{t['id']} {t['studentName']}.md"
-                student_path.write_text("\n======================================\n".join(rv) + "\n", encoding="utf-8")
+                student_path.write_text("\n---\n".join(rv) + "\n", encoding="utf-8")
+                student_path_html = folder_path / f"{t['id']} {t['studentName']}.md.html"
+                md_to_html(student_path, student_path_html)
             else:
                 print("\n".join(rv))
 

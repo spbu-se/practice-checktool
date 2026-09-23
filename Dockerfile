@@ -1,6 +1,6 @@
 FROM python:3.12-alpine
 
-RUN apk add --no-cache git jq bash curl libstdc++ coreutils
+RUN apk add --no-cache git jq bash curl libstdc++ coreutils pandoc
 RUN addgroup -S opencode
 RUN adduser -S -D -h /home/opencode -G opencode opencode
 
