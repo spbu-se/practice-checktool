@@ -5,8 +5,8 @@ RUN addgroup -S opencode
 RUN adduser -S -D -h /home/opencode -G opencode opencode
 
 USER opencode
-ENV HOME /home/opencode
-ENV PATH "${HOME}/.opencode/bin:${PATH}"
+ENV HOME=/home/opencode
+ENV PATH="${HOME}/.opencode/bin:${PATH}"
 
 WORKDIR /home/opencode
 
