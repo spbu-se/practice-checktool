@@ -26,7 +26,7 @@ def md_to_html(md, html) -> None:
 class PracticeGrading:
     """A python bindings to practice grading API"""
 
-    url: str = "http://localhost:8080/api"
+    url: str = "http://127.0.0.1:8080/api"
     login: str = "test"
     password: str = "test"
     cached_data: Any = field(default=None, init=False)
@@ -289,7 +289,7 @@ def build_parser(cli: CLI) -> argparse.ArgumentParser:
 def main() -> None:
     load_dotenv()
 
-    api_url = getenv("PRACTICE_GRADING_URL", "http://127.0.0.1:8080")
+    api_url = getenv("PRACTICE_GRADING_URL", "http://127.0.0.1:8080/api")
     login = getenv("PRACTICE_GRADING_LOGIN", "login")
     password = getenv("PRACTICE_GRADING_PASSWORD", "password")
     model = getenv("LLM_MODEL", "opencode/big-pickle")
