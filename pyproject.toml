@@ -3,7 +3,7 @@ name = "student_repo_analyzer"
 version = "0.1.0"
 description = "Python bindings to Practice Grading application"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Kirill K. Smirnov", email = "kirill.k.smirnov@gmail.com"},
 ]
