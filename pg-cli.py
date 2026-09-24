@@ -137,7 +137,7 @@ class Analyzer:
 
             return self.analyze_folder(workspace)
 
-    def analyze_repos(self, lst: str) -> list[str]:
+    def analyze_repos(self, lst: str | None) -> list[str]:
         if lst is None:
             raise RuntimeError("Repo not provided: empty")
 
@@ -228,7 +228,7 @@ class CLI:
             except RuntimeError as e:
                 rv = [str(e)]
             if folder_path is not None:
-                sanitized_student_name = re.sub(r'[^a-zA-Zа-яА-Я ]', '', t['studentName'])
+                sanitized_student_name = re.sub(r"[^a-zA-Zа-яА-Я ]", "", t["studentName"])
                 student_path = folder_path / f"{t['id']} {sanitized_student_name}.md"
                 student_path.write_text("\n---\n".join(rv) + "\n", encoding="utf-8")
                 student_path_html = folder_path / f"{t['id']} {sanitized_student_name}.md.html"
