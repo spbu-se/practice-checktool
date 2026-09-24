@@ -18,8 +18,8 @@ def md_to_html(md, html) -> None:
         style = "<style>body { max-width: none; margin: 20px; padding: 0; font-family: sans-serif; } table { width: 100%; border-collapse: collapse; margin: 20px 0; } table, th, td { border: 1px solid #ccc; } th, td { padding: 10px; text-align: left; } th { background-color: #f2f2f2; }</style>"
         style_path.write_text(style, encoding="utf-8")
 
-        cmdline = f"pandoc '{md}' -f gfm -t html -H '{style_path}' -o '{html}'"
-        subprocess.run(cmdline, check=False, text=True, shell=True)
+        cmdline = ["pandoc", str(md), "-f", "gfm", "-t", "html", "-H", str(style_path), "-o", str(html)]
+        subprocess.run(cmdline, check=False, text=True)
 
 
 @dataclass
