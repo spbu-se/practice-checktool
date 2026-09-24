@@ -2,4 +2,4 @@
 
 set -e
 
-.venv/bin/black -t py313 --diff --check *.py
+.venv/bin/black -t py312 --diff --check *.py
