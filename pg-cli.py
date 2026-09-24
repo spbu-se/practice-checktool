@@ -1,7 +1,7 @@
 from os import getenv
 from os import environ
 import argparse
-from typing import Any
+from typing import Any, cast
 from dataclasses import dataclass, field
 import shlex
 import tempfile
@@ -58,13 +58,13 @@ class PracticeGrading:
                 return m
         return None
 
-    def find_talk(self, t_id: int) -> Any | None:
+    def find_talk(self, t_id: int) -> dict[str, Any] | None:
         data = self.fetch_all()
 
         for m in data:
             for t in m["studentWorks"]:
                 if t["id"] == t_id:
-                    return t
+                    return cast(dict[str, Any], t)
         return None
 
 
@@ -163,8 +163,8 @@ class Analyzer:
 class CLI:
     """CLI handlers"""
 
-    pg: Any
-    analyzer: Any
+    pg: PracticeGrading
+    analyzer: Analyzer
 
     def handle_list(self, args: Any) -> None:
         l = self.pg.fetch_all()
