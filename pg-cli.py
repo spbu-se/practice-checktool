@@ -228,9 +228,10 @@ class CLI:
             except RuntimeError as e:
                 rv = [str(e)]
             if folder_path is not None:
-                student_path = folder_path / f"{t['id']} {t['studentName']}.md"
+                sanitized_student_name = re.sub(r'[^a-zA-Zа-яА-Я ]', '', t['studentName'])
+                student_path = folder_path / f"{t['id']} {sanitized_student_name}.md"
                 student_path.write_text("\n---\n".join(rv) + "\n", encoding="utf-8")
-                student_path_html = folder_path / f"{t['id']} {t['studentName']}.md.html"
+                student_path_html = folder_path / f"{t['id']} {sanitized_student_name}.md.html"
                 md_to_html(student_path, student_path_html)
             else:
                 print("\n".join(rv))
