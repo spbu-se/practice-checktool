@@ -93,7 +93,7 @@ class Analyzer:
         cmdline = (
             f"timeout 3600 "
             f"stdbuf -o0 "
-            f"opencode --agent student-repo-reviewer --model '{self.model}' --dir '{path}' run '{prompt}' --format json "
+            f"opencode --agent student-repo-reviewer --model '{self.model}' --dir '{path}' run '{prompt}' --format json --auto "
             f"| tee -a /tmp/pr-opencode.log "
             f"| jq -r 'select(.type==\"text\") | .part.text'"
         )
