@@ -12,7 +12,7 @@ import dateutil
 from dotenv import load_dotenv
 
 
-def md_to_html(md, html) -> None:
+def md_to_html(md: pathlib.Path, html: pathlib.Path) -> None:
     with tempfile.TemporaryDirectory() as workspace:
         style_path = pathlib.Path(workspace) / "style.html"
         style = "<style>body { max-width: none; margin: 20px; padding: 0; font-family: sans-serif; } table { width: 100%; border-collapse: collapse; margin: 20px 0; } table, th, td { border: 1px solid #ccc; } th, td { padding: 10px; text-align: left; } th { background-color: #f2f2f2; }</style>"
@@ -29,9 +29,9 @@ class PracticeGrading:
     url: str = "http://127.0.0.1:8080/api"
     login: str = "test"
     password: str = "test"
-    cached_data: Any = field(default=None, init=False)
+    cached_data: list[dict[str, Any]] | None = field(default=None, init=False)
 
-    def fetch_all(self) -> dict:
+    def fetch_all(self) -> list[dict[str, Any]]:
         if self.cached_data is not None:
             return self.cached_data
 
@@ -49,7 +49,7 @@ class PracticeGrading:
 
         return self.cached_data
 
-    def find_meeting(self, m_id: int) -> dict | None:
+    def find_meeting(self, m_id: int) -> dict[str, Any] | None:
         data = self.fetch_all()
 
         for m in data:
@@ -57,7 +57,7 @@ class PracticeGrading:
                 return m
         return None
 
-    def find_talk(self, t_id: int) -> dict | None:
+    def find_talk(self, t_id: int) -> Any | None:
         data = self.fetch_all()
 
         for m in data:
@@ -85,7 +85,7 @@ class Analyzer:
             raise RuntimeError(f"Cannot get repo size: {response.status_code}")
 
         data = response.json()
-        return data["size"]
+        return int(data["size"])
 
     def analyze_folder(self, path: str) -> str:
         current_folder = pathlib.Path(__file__).resolve().parent
@@ -165,7 +165,7 @@ class CLI:
     pg: Any
     analyzer: Any
 
-    def handle_list(self, args) -> None:
+    def handle_list(self, args: Any) -> None:
         l = self.pg.fetch_all()
         if args.raw:
             print(l)
@@ -173,7 +173,7 @@ class CLI:
         for m in l:
             print(f"{m['id']} at {dateutil.parser.parse(m['dateAndTime']).date()}")
 
-    def handle_show_meeting(self, args) -> None:
+    def handle_show_meeting(self, args: Any) -> None:
         m = self.pg.find_meeting(args.id)
         if m is None:
             print(f"Cannot find meeting {args.id}")
@@ -189,7 +189,7 @@ class CLI:
         for s in m["studentWorks"]:
             print(f"\t{s['id']}: {s['studentName']}, {s['theme']}")
 
-    def handle_show_talk(self, args) -> None:
+    def handle_show_talk(self, args: Any) -> None:
         t = self.pg.find_talk(args.id)
         if t is None:
             print(f"Cannot find talk {args.id}")
@@ -208,7 +208,7 @@ class CLI:
         print(f"repos: {t['codeLink']}")
         print(f"final mark: {t['finalMark']}")
 
-    def handle_analyze_meeting(self, args) -> None:
+    def handle_analyze_meeting(self, args: Any) -> None:
         m = self.pg.find_meeting(args.id)
         if m is None:
             print(f"Cannot find meeting {args.id}")
@@ -236,7 +236,7 @@ class CLI:
             else:
                 print("\n".join(rv))
 
-    def handle_analyze_talk(self, args) -> None:
+    def handle_analyze_talk(self, args: Any) -> None:
         t = self.pg.find_talk(args.id)
         if t is None:
             print(f"Cannot find talk {args.id}")

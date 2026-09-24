@@ -2,4 +2,4 @@
 
 set -e
 
-.venv/bin/mypy *.py
+.venv/bin/mypy --strict *.py
