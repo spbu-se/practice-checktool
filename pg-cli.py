@@ -3,6 +3,7 @@ from os import environ
 import argparse
 from typing import Any
 from dataclasses import dataclass, field
+import shlex
 import tempfile
 import pathlib
 import subprocess
@@ -93,7 +94,7 @@ class Analyzer:
         cmdline = (
             f"timeout 3600 "
             f"stdbuf -o0 "
-            f"opencode --agent student-repo-reviewer --model '{self.model}' --dir '{path}' run '{prompt}' --format json --auto "
+            f"opencode --agent student-repo-reviewer --model {shlex.quote(self.model)} --dir {shlex.quote(path)} run {shlex.quote(prompt)} --format json --auto "
             f"| tee -a /tmp/pr-opencode.log "
             f"| jq -r 'select(.type==\"text\") | .part.text'"
         )
