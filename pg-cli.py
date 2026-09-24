@@ -1,5 +1,4 @@
-from os import getenv
-from os import environ
+from os import getenv, environ
 import argparse
 from typing import Any, cast
 from dataclasses import dataclass, field
