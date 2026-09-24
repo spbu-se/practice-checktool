@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "student_repo_analyzer"
 version = "0.1.0"
@@ -21,6 +25,9 @@ dev = [
     "pylint",
     "types-python-dateutil",
 ]
+
+[tool.hatch.build]
+include = ["pg-cli.py"]
 
 [tool.pylint."MESSAGES CONTROL"]
 disable = [
