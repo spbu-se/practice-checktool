@@ -250,7 +250,9 @@ class CLI:
             rv = [str(e)]
 
         if isinstance(args.output, str):
-            pathlib.Path(args.output).write_text("\n".join(rv) + "\n", encoding="utf-8")
+            output_path = pathlib.Path(args.output)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text("\n".join(rv) + "\n", encoding="utf-8")
         else:
             print("\n".join(rv))
 
