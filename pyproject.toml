@@ -8,7 +8,7 @@ authors = [
     {name = "Kirill K. Smirnov", email = "kirill.k.smirnov@gmail.com"},
 ]
 dependencies = [
-    "dotenv",
+    "python-dotenv",
     "requests",
     "python-dateutil",
 ]
